@@ -32,10 +32,6 @@ unfriend = (id, arr) => {
 
 
 // CREATING THE BYE BUTTON //
-for(i=0;i<arr.length;i++) {
-	document.getElementById(arr[i]).checked = true
-}
-
 btn = document.createElement('button')
 btn.innerText = "Bye"
 btn.style.fontSize = "30px"
