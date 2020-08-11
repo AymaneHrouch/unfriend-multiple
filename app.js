@@ -18,9 +18,9 @@ for(i=0;i<friends.length;i++) {
 unfriend = (id, arr) => {
 	if(id<arr.length) {
 		setTimeout(function() {
-			friends[id].children[2].children[0].children[0].children[3].children[0].click();
+			friends[arr[id]].children[2].children[0].children[0].children[3].children[0].click();
 			document.querySelectorAll('[data-sigil="touchable touchable mflyout-remove-on-click m-unfriend-request"]')[0].click();
-			console.log	(friends[id].children[1].children[0].children[0].children[0].children[0].innerText + " has been unfriended");
+			console.log(friends[arr[id]].children[1].children[0].children[0].children[0].children[0].innerText + " has been unfriended");
 			id++;
 			unfriend(id, arr)
 		}, 1000)
