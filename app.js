@@ -1,18 +1,38 @@
 // use the link https://mobile.facebook.com/[Your Username]/friends
 
-friends = document.querySelectorAll('._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]') // list of friends
+
+
+x = parseInt(prompt("How many friends you wanna load?"))
+friends = document.querySelectorAll('._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]')
+scrolling = (n) => {
+	if(n < x) {
+		setTimeout(function() {
+			console.log("n = " + n)
+			window.scrollTo(0, 9999999);
+			friends = document.querySelectorAll('._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]')
+			scrolling(friends.length)
+		}, 3000)
+	}
+	else createCB();
+}
+scrolling(friends.length)
+
 toUnfriend = []
 
 // CREATING THE CHECKBOXES //
-for(i=0;i<friends.length;i++) {
-	var checkBox = document.createElement('input')
-	checkBox.type = "checkbox";
-	checkBox.style.height = "30px";
-	checkBox.style.width = "30px";
-	checkBox.style.margin = "auto";
-	checkBox.id = i;
-	friends[i].appendChild(checkBox);
+createCB = () => {
+	for(i=0;i<friends.length;i++) {
+		var checkBox = document.createElement('input')
+		checkBox.type = "checkbox";
+		checkBox.style.height = "30px";
+		checkBox.style.width = "30px";
+		checkBox.style.margin = "auto";
+		checkBox.id = i;
+		friends[i].appendChild(checkBox);
+	}
+	createBtn();
 }
+
 
 // main function to unfriend // new version dusing setTimeout
 unfriend = (id, arr) => {
@@ -32,19 +52,22 @@ unfriend = (id, arr) => {
 
 
 // CREATING THE BYE BUTTON //
-btn = document.createElement('button')
-btn.innerText = "Bye"
-btn.style.fontSize = "30px"
-list = document.querySelector('._55wo._55x2')
-list.insertBefore(btn, list.childNodes[0])
-btn.addEventListener('click', () => {
-	for(i=0;i<friends.length;i++) {
-		cB = document.getElementById(i).checked
-		if(cB) {
-			toUnfriend.push(i)
+createBtn = () => {
+	btn = document.createElement('button')
+	btn.innerText = "Bye"
+	btn.style.fontSize = "30px"
+	list = document.querySelector('._55wo._55x2')
+	list.insertBefore(btn, list.childNodes[0])
+	btn.addEventListener('click', () => {
+		for(i=0;i<friends.length;i++) {
+			cB = document.getElementById(i).checked
+			if(cB) {
+				toUnfriend.push(i)
+			}
 		}
-	}
-  
-  unfriend(0, toUnfriend);
-	toUnfriend = []
-})
+
+	  unfriend(0, toUnfriend);
+		toUnfriend = []
+	})
+}
+
