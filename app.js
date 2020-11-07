@@ -5,9 +5,9 @@
 x = parseInt(prompt("How many friends you wanna load?"))
 friends = document.querySelectorAll('._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]')
 scrolling = (n) => {
+	console.log(n + " friends loaded")
 	if(n < x) {
 		setTimeout(function() {
-			console.log("n = " + n)
 			window.scrollTo(0, 9999999);
 			friends = document.querySelectorAll('._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]')
 			scrolling(friends.length)
