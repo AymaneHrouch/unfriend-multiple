@@ -77,3 +77,9 @@ createBtn = () => {
 	})
 }
 
+// Select all
+
+selectAll = () => {
+	for(i=0;i<friends.length;i++)
+    	friends[i].children[3].checked = true
+}
