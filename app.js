@@ -13,7 +13,12 @@ scrolling = (n) => {
 			scrolling(friends.length)
 		}, 3000)
 	}
-	else createCB();
+	else 
+	{
+		window.scrollTo(0,0);
+		createCB();
+		
+	}
 }
 scrolling(friends.length)
 
@@ -41,6 +46,7 @@ unfriend = (id, arr) => {
 			friends[arr[id]].children[2].children[0].children[0].children[3].children[0].click();
 			document.querySelectorAll('[data-sigil="touchable touchable mflyout-remove-on-click m-unfriend-request"]')[0].click();
 			console.log(friends[arr[id]].children[1].children[0].children[0].children[0].children[0].innerText + " has been unfriended");
+			friends[arr[id]].children[3].checked = false;
 			id++;
 			unfriend(id, arr)
 		}, 1000)
