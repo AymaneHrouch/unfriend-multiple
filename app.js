@@ -1,24 +1,23 @@
 // use the link https://mobile.facebook.com/[Your Username]/friends
 
 // scrolling
+const loader = document.querySelector(".seeMoreFriends");
+if (loader) {
+  const obs = new MutationObserver(callback);
+  const options = { childList: true };
+  obs.observe(document.querySelector("._2pit"), options);
+  createCB();
+}
+
 
 const callback = (mutationList, observer) => {
+  console.log("callback");
   const moreFriends = document.querySelector(".seeMoreFriends");
-  if (!moreFriends) {
-    observer.disconnect();
+  if (moreFriends) {
     createCB();
-  }
-};
-
-const scroll = () => {
-  const loader = document.querySelector(".seeMoreFriends");
-  if (loader) {
-    const obs = new MutationObserver(callback);
-    obs.observe(document.querySelector("._2pit"), {
-      childList: true,
-    });
   } else {
     createCB();
+	console.log("no more friends")
   }
 };
 
