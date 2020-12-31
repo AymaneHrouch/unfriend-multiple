@@ -38,14 +38,6 @@ const loadFriends = (scrolling = false) => {
     const obs = new MutationObserver(callback);
     const options = { childList: true };
     obs.observe(document.querySelector("._2pit"), options);
-<<<<<<< HEAD
-    loader.scrollIntoView();
-  } else {
-    friends = document.querySelectorAll(
-      '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
-    );
-=======
->>>>>>> cbons
     createCB();
     if (scrolling) loader.scrollIntoView();
   }
