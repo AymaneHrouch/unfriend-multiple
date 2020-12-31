@@ -19,9 +19,8 @@ const scroll = () => {
   const loader = document.querySelector(".seeMoreFriends");
   if (loader) {
     const obs = new MutationObserver(callback);
-    obs.observe(document.querySelector("._2pit"), {
-      childList: true,
-    });
+    const options = { childList: true };
+    obs.observe(document.querySelector("._2pit"), options);
     loader.scrollIntoView();
   } else {
     friends = document.querySelectorAll(
