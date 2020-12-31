@@ -4,13 +4,8 @@
 
 const callback = (mutationList, observer) => {
   const moreFriends = document.querySelector(".seeMoreFriends");
-  if (moreFriends) {
-    moreFriends.scrollIntoView();
-  } else {
+  if (!moreFriends) {
     observer.disconnect();
-    friends = document.querySelectorAll(
-      '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
-    );
     createCB();
   }
 };
@@ -22,11 +17,7 @@ const scroll = () => {
     obs.observe(document.querySelector("._2pit"), {
       childList: true,
     });
-    loader.scrollIntoView();
   } else {
-    friends = document.querySelectorAll(
-      '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
-    );
     createCB();
   }
 };
@@ -36,14 +27,18 @@ const scroll = () => {
 toUnfriend = [];
 
 // CREATING THE CHECKBOXES //
+checkboxId = 0;
 createCB = () => {
-  for (i = 0; i < friends.length; i++) {
+  friends = document.querySelectorAll(
+    '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
+  );
+  for (i = checkboxId; i < friends.length; i++) {
     var checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     checkBox.style.height = "30px";
     checkBox.style.width = "30px";
     checkBox.style.margin = "auto";
-    checkBox.id = i;
+    checkBox.id = checkboxId++;
     friends[i].appendChild(checkBox);
   }
   createBtn();
