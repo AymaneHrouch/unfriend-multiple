@@ -1,12 +1,17 @@
 // use the link https://mobile.facebook.com/[Your Username]/friends
 
 // CREATING THE CHECKBOXES //
-checkboxId = 0;
-const createCB = () => {
-  friends = document.querySelectorAll(
+"use strict";
+
+const getFriends = () =>
+  document.querySelectorAll(
     '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
   );
-  for (i = checkboxId; i < friends.length; i++) {
+
+let checkboxId = 0;
+const createCB = () => {
+  const friends = getFriends();
+  for (let i = checkboxId; i < friends.length; i++) {
     var checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     checkBox.style.height = "30px";
@@ -21,7 +26,6 @@ const createCB = () => {
 /// Load Friends
 const loadFriends = (scrolling = false) => {
   const callback = (mutationList, observer) => {
-    console.log("callback");
     const moreFriends = document.querySelector(".seeMoreFriends");
     if (moreFriends) {
       createCB();
@@ -42,62 +46,95 @@ const loadFriends = (scrolling = false) => {
     if (scrolling) loader.scrollIntoView();
   }
 };
-loadFriends();
 
-// CREATING THE BYE BUTTON //
-createBtn = () => {
-  btn = document.createElement("button");
-  btn.innerText = "Bye";
-  btn.style.fontSize = "30px";
-  list = document.querySelector("._55wo._55x2");
-  list.insertBefore(btn, list.childNodes[0]);
-  btn.addEventListener("click", () => {
+// Insert Buttons
+const insertBtns = (...btns) => {
+  const div = document.createElement("div");
+  div.style.position = "fixed";
+  const list = document.querySelector("._55wo._55x2");
+  const buttons = [...btns];
+  buttons.map(btn => {
+    btn.style.display = "inline-block";
+    btn.style.fontSize = "2rem";
+    btn.style.color = "#4267b2";
+    btn.style.padding = "1rem 0.5rem";
+    btn.style.border = "solid";
+    btn.style.backgroundColor = "#fff";
+    btn.style.opacity = "0.8";
+    btn.style.marginLeft = "10px";
+    btn.style.cursor = "pointer"
+    div.appendChild(btn);
+  });
+  list.insertBefore(div, list.childNodes[0]);
+};
+
+// CREATING THE BUTTONS //
+const createBtns = () => {
+  const unfriendBtn = document.createElement("button");
+  unfriendBtn.innerText = "Unfriend";
+  unfriendBtn.addEventListener("click", () => {
     unfriend(0, toUnfriend());
   });
+
+  const selectAllBtn = document.createElement("button");
+  selectAllBtn.innerText = "Select All";
+  selectAllBtn.addEventListener("click", () => selectAll(true));
+
+  const unselectAllBtn = document.createElement("button");
+  unselectAllBtn.innerText = "Unselect All";
+  unselectAllBtn.addEventListener("click", () => selectAll(false));
+
+  const LoadAllBtn = document.createElement("button");
+  LoadAllBtn.innerText = "Load All Friends";
+  LoadAllBtn.addEventListener("click", () => loadFriends(true));
+
+  insertBtns(unfriendBtn, selectAllBtn, unselectAllBtn, LoadAllBtn);
+  unfriendBtn.style.backgroundColor = "red";
 };
-createBtn();
+createBtns();
 
 // main function to unfriend // new version using setTimeout
-toUnfriend = () => {
-  friends = document.querySelectorAll(
-    '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
-  );
+const toUnfriend = () => {
   return Array.prototype.slice
     .call(document.getElementsByClassName("mycheckbox"))
     .filter(f => f.checked);
 };
 
-unfriend = (id, arr) => {
+const unfriend = (id, arr) => {
   if (id >= arr.length) return;
-  friendIndex = arr[id].id;
-  friends = document.querySelectorAll(
-    '._55wp._7om2._5pxa._8yo0[data-sigil="undoable-action"]'
-  );
+  const friendIndex = arr[id].id;
+  const friends = getFriends();
   if (id < arr.length) {
     setTimeout(function () {
       friends[
         friendIndex
       ].children[2].children[0].children[0].children[3].children[0].click();
+
       document
         .querySelectorAll(
           '[data-sigil="touchable touchable mflyout-remove-on-click m-unfriend-request"]'
         )[0]
         .click();
+
       console.log(
         friends[friendIndex].children[1].children[0].children[0].children[0]
           .children[0].innerText + " has been unfriended"
       );
+
       friends[friendIndex].children[3].checked = false;
       id++;
       unfriend(id, arr);
     }, 100);
-  } else {
-    console.log("DONE!");
-  }
+  } else console.log("DONE!");
 };
 
-// Select all
 
-selectAll = () => {
-  for (i = 0; i < friends.length; i++) friends[i].children[3].checked = true;
+// Select all/unselect all
+
+const selectAll = bool => {
+  const friends = getFriends();
+  for (let i = 0; i < friends.length; i++)
+  friends[i].children[3].checked = bool;
 };
+
+window.addEventListener("load", loadFriends);
